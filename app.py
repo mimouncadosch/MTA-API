@@ -10,6 +10,10 @@ def index():
 	stops = read_files()
 	return render_template('index.html', stops = stops)
 
+@app.route('/home')
+def home():
+	return render_template('home.html')
+
 @app.route('/files')
 def read_files():
 	# Create objects for each subway stop
@@ -28,16 +32,17 @@ def read_files():
 	# # For each subway stop, add the times where trains top there
 	stop_times = open("google_transit/stop_times.txt", "r+")
 	
-	# for line in stop_times:
-	# 	t = line.split(",")
-	# 	# print t
-	# 	for stop in stops:	# For every stop in list of stops
-	# 		if stop['id'] in t[3]:	# Match stations by code	
-	# 			stop['arrivals'].append(t[1]) # Add arrival times to each station
+	for line in stop_times:
+		t = line.split(",")
+		# print t
+		for stop in stops:	# For every stop in list of stops
+			if stop['id'] in t[3]:	# Match stations by code	
+				stop['arrivals'].append(t[1]) # Add arrival times to each station
 
-	# for item in stops:
-	# 	print item
+	for item in stops:
+		print item
 
+	print 'We are ready now'
 	return stops
 
 # In file given, each station appears three times. Take each station once only

@@ -13,6 +13,9 @@
 	<script type="text/javascript">
 
 		var data = {{ stops|safe }};
+		console.log(data);
+
+		var markers = [];
 		// Initialize map
 		function initialize() {
 			var mapOptions = {
@@ -24,8 +27,27 @@
 					// Add stations to map
 			console.log('adding stops');
 			console.log(new Date().getTime());
-			// test_func(data);
+			
+			// Add markers to map
+			var markers = addMarkers(data, map);
+			tick();
 
+		} // End of initialize
+
+		google.maps.event.addDomListener(window, 'load', initialize);
+
+		// Tick
+		function tick() {
+			console.log('calling tick');
+			// console.log(markers);
+			animate(markers);
+			// clearInterval(t);
+			var t = setTimeout('tick()', 10000);
+		}
+
+		
+		// Add markers to map
+		function addMarkers(data, map) {
 			for (var i = 0; i < data.length; i++) {
 				var stop = data[i];
 				var myLatlng = new google.maps.LatLng(stop['lat'], stop['lon']);
@@ -34,28 +56,21 @@
 					title: stop['name'],
 					icon: '/static/train.png'
 				});
+				markers.push(marker);
 				marker.setMap(map);	
 			};
-		
+			return markers;
 		}
-		google.maps.event.addDomListener(window, 'load', initialize);
-
-		function test_func(data) {
-			console.log(data);
-		}
-		
-
-		function tick() {
-			var d = new Date();
-			var time = d.getHours() +':'+ d.getMinutes() + ':' + d.getSeconds();
-			console.log('TIME NOW:'+time);
-			t = setTimeout('tick()', 10000);
+	
+		// Animation
+		function animate(markers) {
+			console.log('calling animate');
+			// console.log(markers);
+			for (var i = 0; i < markers.length; i++) {
+				markers[i].setAnimation(google.maps.Animation.DROP);			
+			};
 		}
 		
-		$(document).ready(function(){
-			tick();
-		});
-
 
 	</script>
 

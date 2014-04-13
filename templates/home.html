@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf8">
+	<title>NYC Pulse</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+	<script type="text/javascript"
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC8LeyaDeV6VXi7os1k-XO_kATNyVkVDQw&sensor=false">
+	</script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script>window.jQuery || document.write('<script src="{{
+  url_for('static', filename='jquery.js') }}">\x3C/script>')</script>
+	<script type="text/javascript">
+
+		
+		var markers = [];
+		// Initialize map
+		function initialize() {
+			var mapOptions = {
+				center: new google.maps.LatLng(40.6700, -73.9400),
+				zoom: 16
+			};
+			var map = new google.maps.Map(document.getElementById("map-canvas"),
+				mapOptions);
+					// Add stations to map
+			console.log('adding stops');
+			console.log(new Date().getTime());
+			
+			var myLatlng = new google.maps.LatLng(40.6700, -73.9400);
+			var marker = new google.maps.Marker({
+				position: myLatlng,
+				title: stop['name'],
+				icon: '/static/train.png' //,
+				// animation: google.maps.Animation.BOUNCE
+			});
+			marker.setMap(map);	
+			marker.setAnimation(google.maps.Animation.BOUNCE);
+
+			function tick() {
+				console.log('getting ticky with it');
+			}
+
+			setInterval(tick, 10000);
+
+			$('#stop').click(function() {
+				console.log('stopping animation');
+				marker.setAnimation(null);				
+			});
+			
+			$('#go').click(function() {
+				console.log('do animation');
+				marker.setAnimation(google.maps.Animation.BOUNCE);
+			});
+			// var t = setInterval(toggleBounce(), 3000);
+			// clearInterval(t);
+
+			// function toggleBounce () {
+			// 	console.log('calling toggleBounce');
+			// 	if (marker.getAnimation() != null) {
+			// 		marker.setAnimation(null);
+			// 	} else {
+					
+			// 	}
+			// }
+			
+		
+		} // End of initialize
+
+
+
+		google.maps.event.addDomListener(window, 'load', initialize);
+
+
+		// // Timeout method
+		// function tick() {
+		// 	var d = new Date();
+		// 	var time = d.getHours() +':'+ d.getMinutes() + ':' + d.getSeconds();
+		// 	console.log('TIME NOW: '+ time);
+		// 	for (var i = 0; i < markers.length; i++) {
+		// 		toggleBounce(markers[i]);
+		// 	};
+		// 	setInterval('tick()', 10000);
+		// }
+
+		// // Animation
+		// function toggleBounce (marker) {
+		// 	console.log('calling toggleBounce');
+
+		// 	if (marker.getAnimation() != null) {
+		// 		marker.setAnimation(null);
+		// 	} else {
+		// 		marker.setAnimation(google.maps.Animation.DROP);
+		// 	}
+		// }
+		
+		// $(document).ready(function(){
+		// 	tick();
+		// });
+
+
+	</script>
+
+</head>
+<body>
+	<button id="stop">Stop bounce</button>
+	<button id="go">bounce</button>
+	<div id="map-canvas"/>
+
+</body>
+</html>
