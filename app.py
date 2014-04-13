@@ -26,19 +26,17 @@ def read_files():
 	stops = remove_duplicates(stops)
 
 	# # For each subway stop, add the times where trains top there
-	# stop_times = open("google_transit/stop_times.txt", "r+")
+	stop_times = open("google_transit/stop_times.txt", "r+")
 	
 	# for line in stop_times:
 	# 	t = line.split(",")
-
-	# 	for stop in stops:
-	# 		if t[3] == stop['id']:	# Match stations by code
-	# 			print 't[3]', t[3]
-	# 			print stop['id']
+	# 	# print t
+	# 	for stop in stops:	# For every stop in list of stops
+	# 		if stop['id'] in t[3]:	# Match stations by code	
 	# 			stop['arrivals'].append(t[1]) # Add arrival times to each station
 
-	for item in stops:
-		print item
+	# for item in stops:
+	# 	print item
 
 	return stops
 
