@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf8">
+		<title>NYC Pulse</title>
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+		<script type="text/javascript"
+      		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC8LeyaDeV6VXi7os1k-XO_kATNyVkVDQw&sensor=false">
+    	</script>
+	</head>
+	<body>
+		Hello World!
+		Hello {{stop}}
+		<div id="map-canvas"/>
+	</body>
+	<script src="{{ url_for('static', filename='js/map.js') }}"></script>
+</html>
