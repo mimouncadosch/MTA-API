@@ -10,9 +10,9 @@ def index():
 	stops = read_files()
 	return render_template('index.html', stops = stops)
 
-@app.route('/home')
-def home():
-	return render_template('home.html')
+@app.route('/test')
+def test():
+	return render_template('test.html')
 
 @app.route('/files')
 def read_files():

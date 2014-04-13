@@ -30,7 +30,8 @@
 			
 			// Add markers to map
 			var markers = addMarkers(data, map);
-			tick();
+			// console.log(markers[1]);
+			tick(markers);
 
 		} // End of initialize
 
@@ -40,9 +41,25 @@
 		function tick() {
 			console.log('calling tick');
 			// console.log(markers);
-			animate(markers);
+			var currentTime = new Date();
+			console.log('currentTime :', currentTime.getTime());
+			var relevantMarkers = [];	// Markers that need to move when clock ticks
+			for (var i = 0; i < data.length; i++) { 	// Loop through markers
+				var arrivals = data[i].arrivals;
+				console.log('arrivals');
+				console.log(arrivals);
+				for (var j = 0; j < arrivals.length; i++) {	// For each marker, loop through its arrivals 
+					console.log('arrivals[j]');
+					console.log(arrivals[j]);
+					if(sameTime(arrivals[j], currentTime))
+						relevantMarkers.push(markers[i]);
+				};
+			};
+			console.log('relevantMarkers');
+			console.log(relevantMarkers);
+			animate(relevantMarkers);
 			// clearInterval(t);
-			var t = setTimeout('tick()', 10000);
+			var t = setTimeout('tick()', 60000);
 		}
 
 		
@@ -70,8 +87,29 @@
 				markers[i].setAnimation(google.maps.Animation.DROP);			
 			};
 		}
-		
 
+		// Check if two times are the same
+		// Used to what trains arrive at any given minute
+		// Necessary because MTA provides times in non-UTC format
+		// trainTime is already formated
+		// currentTime is in Time Since Epoch format
+		function sameTime(trainTime, currentTime) {
+			console.log('calling sameTime');
+			var currentHour = currentTime.getHours();
+			var currentMin = currentTime.getMinutes();
+			console.log('currentHour' + currentHour + 'currentMin' + currentMin);
+
+			var trainTime = trainTime.split(":");
+			var trainHour = trainTime[0];
+			var trainMin = trainTime[1];
+			console.log('trainHour' + trainHour + 'trainMin' + trainMin);
+
+			if((currentHour == trainHour) && (currentMin == trainMin)) {
+				return true;
+			}
+			return false;
+		}	
+			
 	</script>
 
 </head>
