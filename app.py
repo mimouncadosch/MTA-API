@@ -7,10 +7,11 @@ app = Flask(__name__)
 def index():
 	stop = {'name' : '96', 'place': 'UWS'}
 	stop['people'] = '200'
-	return render_template('index.html', stop = stop)
+	stops = read_files()
+	return render_template('index.html', stops = stops)
 
 @app.route('/files')
-def read_file():
+def read_files():
 	# Create objects for each subway stop
 	stops_file = open("google_transit/stops.txt", "r+") # Open file
 	stops = [] # Array of stop objects
@@ -39,7 +40,7 @@ def read_file():
 	for item in stops:
 		print item
 
-	return 'hello world backend'
+	return stops
 
 # In file given, each station appears three times. Take each station once only
 def remove_duplicates(array):
