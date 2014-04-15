@@ -1,34 +1,40 @@
 import os
-from flask import Flask, jsonify, render_template, request	
 
-app = Flask(__name__)
+stop_times = open("google_transit/stop_times.txt", "r+")
+stops_info = open("google_transit/stops.txt", "r+")
+info = open("info.json", "w+")
+
+arrivals = []
+for line in stop_times:
+	t = line.split(",")
+	time = t[1].split(":")
+	id = t[3]
+	arrival = {'time' : time, 'id' : id}
+	arrivals.append(arrival)
+print 'done with arrivals'
+
+stops = []
+for line in stops_info:
+	t = line.split(",")
+	print t
+	id = t[0]
+	name = t[2]
+	lat = t[4]
+	lon = t[5]
+	
+	stop = {'id': id, 'name': name, 'lat': lat, 'lon': lon}
+	stops.append(stop)
+print 'done with stops'
 
 
-@app.route('/load')
-def load_data():
-	print 'calling load_data'
-	data = open("google_transit/stop_times_abbr.txt", "r+")
-	arrivals = []
-	for line in data:
-		arrivals.append(line)
+data = {}
+for stop in stops:
+	for arrival in arrivals:
+		if stop['id'] == arrival['id']:
+			print 'found match', stop['id'], arrival['id']
+			data[stop['id']] = {'id': stop['id'], 'name': stop['name'], 'lat': stop['lat'], 'lon': stop['lon'], 'time':arrival['time']}
+			print data
 
-	return 'data loaded'
+data = jsonify(data)
+info.write(data)
 
-
-@app.route('/get_arrivals')
-def get_arrivals():
-	print 'calling get_arrivals'
-	currHour = request.args.get('hour', 0, type=str)
-	currMinute = request.args.get('minute', 0, type=str)
-
-	return jsonify(result=currHour + currMinute)
-
-@app.route('/')
-def index():
-	isLoaded = load_data()
-	print isLoaded
-	return 'I am ready'
-	# return render_template('index.html')
-
-if __name__ == "__main__":
-	app.run()
