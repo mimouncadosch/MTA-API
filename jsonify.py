@@ -28,13 +28,13 @@ print 'done with stops'
 
 
 data = {}
-for stop in stops:
-	for arrival in arrivals:
+for arrival in arrivals:
+	for stop in stops:
 		if stop['id'] == arrival['id']:
 			print 'found match', stop['id'], arrival['id']
 			data[stop['id']] = {'id': stop['id'], 'name': stop['name'], 'lat': stop['lat'], 'lon': stop['lon'], 'time':arrival['time']}
 			print data
 
-data = jsonify(data)
+# data = jsonify(data)
 info.write(data)
 
