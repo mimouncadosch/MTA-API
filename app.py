@@ -30,18 +30,19 @@ for line in stop_times:
 	if id not in ids:
 		ids.append(id)
 	arrivals.setdefault(id,[]).append(time)
-print 'len(ids)', len(ids)
+# print 'len(ids)', len(ids)
 
 
 data = {}
 for id in ids:
 	data[id] = {'name' : stops[id]['name'], 'lat': stops[id]['lat'], 'lon': stops[id]['lon'], 'arrivals': arrivals[id]}
 
+
 db = pickledb.load('example.db', False)
 i = 1
 for key in data:
-	print 'key', key, i
-	i += 1
+	# print 'key', key, i
+	# i += 1
 	# print 'data[key]', data[key]
 	db.set(key, data[key])
 
@@ -60,8 +61,25 @@ def api():
 	print 'res', res
 	return jsonify(result=res)
 
-# @app.route('/times')
+# Given time, returns all stations where train stops at that time
+@app.route('/times')
+def times():
+	hour = request.args.get('hour', 0, type=str)
+	minute = request.args.get('minute', 0, type=str)
+	print 'request for hour and min', hour, minute
+	i = 0
+	results = []
+	for key in data:
+		arrivals = data[key]['arrivals']
+		for arrival in arrivals:
+			a = arrival.split(":")
+			if a[0] == hour and a[1] == minute:
+				result = {'arrival': arrival, 'id': key, 'name': data[key]['name'], 'lat': data[key]['lat'], 'lon': data[key]['lon']}
+				results.append(result)
+	return jsonify(result=results)
 
+
+	# return jsonify(result=results)
 # stop_times = open("google_transit/stop_times.txt", "r+")
 # stops_info = open("google_transit/stops.txt", "r+")
 # # info = open("info.json", "w+")
