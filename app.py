@@ -41,9 +41,6 @@ for id in ids:
 # db = pickledb.load('example.db', False)
 # i = 1
 # for key in data:
-# 	# print 'key', key, i
-# 	# i += 1
-# 	# print 'data[key]', data[key]
 # 	db.set(key, data[key])
 
 
@@ -57,7 +54,8 @@ def index():
 def api():
 	id = request.args.get('id', 0, type=str)
 	print 'request for id', id
-	res = db.get(id)
+	# res = db.get(id)
+	res = data[id]
 	print 'res', res
 	return jsonify(result=res)
 
