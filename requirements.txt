@@ -4,4 +4,6 @@ MarkupSafe==0.19
 Werkzeug==0.9.4
 gunicorn==18.0
 itsdangerous==0.24
+multiprocessing==2.6.2.1
+pickleDB==0.3
 wsgiref==0.1.2
