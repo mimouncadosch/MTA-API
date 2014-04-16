@@ -38,15 +38,8 @@ for id in ids:
 	data[id] = {'name' : stops[id]['name'], 'lat': stops[id]['lat'], 'lon': stops[id]['lon'], 'arrivals': arrivals[id]}
 
 
-# db = pickledb.load('example.db', False)
-# i = 1
-# for key in data:
-# 	db.set(key, data[key])
-
-
 @app.route('/')
 def index():
-	# load_data()
 	return 'hello world. stations'
 
 # Given station, returns all info about that station
@@ -54,7 +47,6 @@ def index():
 def api():
 	id = request.args.get('id', 0, type=str)
 	print 'request for id', id
-	# res = db.get(id)
 	res = data[id]
 	print 'res', res
 	return jsonify(result=res)
