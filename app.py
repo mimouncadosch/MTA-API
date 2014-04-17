@@ -56,7 +56,7 @@ def api():
 def times():
 	hour = request.args.get('hour', 0, type=str)
 	minute = request.args.get('minute', 0, type=str)
-	print 'request for hour and min', hour, minute
+	# print 'request for hour and min', hour, minute
 	i = 0
 	results = []
 	for key in data:
@@ -64,9 +64,27 @@ def times():
 		for arrival in arrivals:
 			a = arrival.split(":")
 			if a[0] == hour and a[1] == minute:
-				result = {'arrival': arrival, 'id': key, 'name': data[key]['name'], 'lat': data[key]['lat'], 'lon': data[key]['lon']}
+				result = {'id': key, 'name': data[key]['name'], 'lat': data[key]['lat'], 'lon': data[key]['lon'], 'arrival': arrival}
 				results.append(result)
 	return jsonify(result=results)
+
+
+# Provide ids for all stations
+@app.route('/stations')
+def stations():
+	stations = []
+	for id in ids:
+		station = {'id': id, 'name': data[id]['name']} 
+		stations.append(station)
+		
+	return jsonify(result=stations[1:])
+
+@app.route('/stop')
+def station():
+	req = request.args.get('id', 0, type=str)
+	res = {'name': data[req]['name'], 'lat': data[req]['lat'], 'lon': data[req]['lon']}
+
+	return jsonify(result=res)
 
 if __name__ == "__main__":
 	app.run()
