@@ -5,7 +5,7 @@
 ### Subway station codes
 The MTA uses a set of codes to refer to subway stations in New York. In order to use these codes for other requests in this API, make the request:
 
-Sample Request
+Sample Request  
 `mtaapi.herokuapp.com/stations`
 
 Sample response
@@ -28,10 +28,10 @@ Sample response
 ### Subway station data
 Given a station code (see above), get name and coordinates of every station.
 
-Parameters
+Parameters  
 `id: the station id. Ex: 120S for 96th St.`
 
-Sample Request
+Sample Request  
 `mtaapi.herokuapp.com/stop?id=120S`
 
 Sample response
@@ -49,10 +49,10 @@ Sample response
 
 This endpoint provides all subway arrival times at a given station.
 
-Parameters
+Parameters  
 `id: the station id. Ex: 120S for 96th St.`
 
-Sample Request
+Sample Request  
 `mtaapi.herokuapp.com/api?id=120S`
 
 Sample response
@@ -81,11 +81,11 @@ Sample response
 
 This endpoint provides all subway stations where a train is stopping at the time specified
 
-Parameters
+Parameters  
 `hour: the hour, from 00:59 to 23:59 (European format). Ex: 23 for 11pm, 09 for 9am`
 `minute: the minutes, from 0 to 59`
 
-Sample Request
+Sample Request  
 `mtaapi.herokuapp.com/times?hour=10&minute=25`
 
 Sample response
